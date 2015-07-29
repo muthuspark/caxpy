@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Backup and Restore - Caxpy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/apprise-v2.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <div class="navbar-brand" style="margin-left:-27px">
+	      	<A href="/caxpy" style="color:#fff"><img src="images/path4642.png" class="brand" > Caxpy</A>
+	      </div>
+	    </div>
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<ul class="list-group">
+					<li class="list-group-item"><a href="groups">Report Groups</a></li>
+					<!-- <li class="list-group-item"><a href="settings">Settings</a></li> -->
+					<li class="list-group-item"><a href="backup">Backup And Restore</a></li>
+				</ul>
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Backup And Restore</h3>
+						<div class="list-group">
+							<div class="panel panel-default">
+							  <div class="panel-body">
+							  	<div class="alert alert-warning" role="alert"><b>Note:</b>During Backup or Restore all your reports will stop working for a brief moment and will start back again once the work is done.</div>
+							    <div class="btn-group btn-group-justified">
+								 	<a class="btn btn-default btn-lg" href="backuprestore" target="_blank" role="button">Backup Reports</a>
+								  	<a class="btn btn-default btn-lg" href="#" onclick="openRestoreDialog()" role="button">Restore From Backup</a>
+								</div>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="restoreDialog" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="restoreDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Restore from Backup</h4>
+					</div>
+					<div class="modal-body whitebg">
+						<input type="file" name="caxpydb" data-url="backuprestore" class="form-control" id="caxpydb">
+						<div id="progress">
+						    <div class="bar" style="width: 0%;background: green; height: 18px;color:#fff; font-size: 10px; paddin:5px;"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="uploadButton" >Upload</button>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+<script type="text/javascript">
+function openRestoreDialog(){
+	$("#restoreDialog").modal('show');
+}
+</script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/apprise-1.5.min.js"></script>
+<script src="js/fileupload/jquery.ui.widget.js"></script>
+<script src="js/fileupload/jquery.iframe-transport.js"></script>
+<script src="js/fileupload/jquery.fileupload.js"></script>
+<script type="text/javascript">
+$(function () {
+    $('#caxpydb').fileupload({
+        done: function (e, data) {
+        	$("#restoreDialog").modal('hide');
+        },
+        autoUpload: false,
+        add : function(e,data){
+            $("#uploadButton").on("click",function(){
+               data.submit();
+            })
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+            $('#progress .bar').html(progress + '%');
+        },
+        fail : function (e, data) {
+            // data.errorThrown
+            // data.textStatus;
+            // data.jqXHR;
+            clearProgressBar();
+            apprise("Failed to upload your file. Please recheck if the file type is right.");
+        }
+    });
+});
+</script>
+</body>
+</body>
+</html>

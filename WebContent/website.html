@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>  
+<html>
+<head>
+	<meta charset="utf-8">  
+	<title>Caxpy – A Simple Data Visualization Software</title>  
+	<meta name="description" content="Caxpy is an easy to use data visualization tool that helps you understand your data and create beautiful dashboards.">  
+	<meta name="viewport" content="width=device-width">
+	<link href="css/home.css" media="all" type="text/css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" media="all" type="text/css" rel="stylesheet">
+</head>  
+<body>
+	<div id="wrapper">
+		<header id="branding">
+			<h1>
+				<img src="images/path4642.png" alt="Caxpy Logo" height="60">
+				Caxpy
+			</h1>
+			<h2>A Simple Data Visualization Software</h2>
+			<p class="container">
+				<img src="images/caxpy/bubble-report.png" alt="Caxpy Screenshot">
+			</p>
+		</header>
+		
+		<nav id="links">
+			<ul>
+				<li><a href="https://sourceforge.net/projects/caxpy/files/latest/download"><i class="icon-download-alt"></i> Download <small>Beta Version &nbsp;&middot;&nbsp; 22 May 2015</small></a></li>
+				<li><a href="http://caxpy.com/forum"><i class="icon-comments-alt"></i> Community</a></li>
+				<li><a href="http://caxpy.com/documentation"><i class="icon-wrench"></i> Documentation</a></li>
+				<li><a href="http://caxpy.com/blog"><i class="icon-beaker"></i> Blog</a></li>
+			</ul>
+		</nav>
+		
+		<section id="features">
+			<h3>Caxpy Features</h3>
+			<div class="container">
+				<table>
+					<tr>
+						<td>
+							<h4>D3 Based Charts</h4>
+							<p>
+								Area, Line, Column, Radar, Pie , Doughnut, Bubble Chart, Scatter plot and Chord Layout chart. More will be added in future so keep updating your software.
+							<p>
+						</td>
+						<td>
+							<h4>Supports all major SQL DBs</h4>
+							<p>
+								Since the report data is based on SQL queries, it supports all the major SQL databases like MySQL, PostgreSQl, Oracle, H2Db, HSQLDB etc
+							<p>
+						</td>
+						<td>
+							<h4>Dynamic Queries</h4>
+							<p>
+								Reports can be built using queries generated dynamically. For instance a user dashboard can have reports based on the login user and thus your query might need the sessions userid. Such reports can be easily created using caxpy.
+							<p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Real time reports</h4>
+							<p>
+								Create real time reports for your dashboards. The data is updated at regular intervals automatically.
+							<p>
+						</td>
+						<td>
+							<h4>Very lightweight</h4>
+							<p>
+								Unlike other major business intelligence and data visualization applications which are heavy and needs a lot more memory as their basic specification, Caxpy on the other hand is extremely lightweight and does just what it is meant to do.
+							<p>
+						</td>
+						<td>
+							<h4>Easy to Integrate</h4>
+							<p>
+								All you have to do is copy the installation file which is a WAR file and paste it inside your java based application server. It has its own db and doesn't need any external database for storage.
+							<p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Easy to Learn</h4>
+							<p>
+								If you know SQL, you can do anything with Caxpy. Just add your database and start creating amazing charts. No need to create complex cubes or learn any charting library. Watch this video to see how simple it is.
+							<p>
+						</td>
+						<td>
+							<h4>Beautiful Dashboards</h4>
+							<p>
+								Create beautiful dashboards with just a few lines of code. Embed reports created by you wherever you like with just 2 lines of code.
+							<p>
+						</td>
+						<td>
+							<h4>Pricing</h4>
+							<p>
+								Its free to use for all your personal and non commercial projects.
+							<p>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+		</section>
+		<section id="installation">
+			<h3>Try out Caxpy!</h3>
+			<div class="container">
+				<div class="entry-content">
+					<h4 class="title">Prerequisites</h4>
+					<p>All you need&nbsp;in order to start using Caxpy&nbsp;is Java 7 (or higher) and a server that can run Capy, preferably Tomcat 7+. Only a JRE (Java Runtime Environment) is required and not the full-blown JDK (Java Development Kit).<br>
+					There is a good chance that Java is already installed on your system and you can verify whether it is ready to run Caxpy&nbsp;by opening a command prompt and typing the following command:<br>
+					<code><br>
+					java -version<br>
+					</code><br>
+					If the system responds with a java version that is 1.7 or greater, you are ready to download and run Caxpy.<br>
+					You can download Java from here: http://www.java.com/download.</p>
+					<p>To install Tomcat you can follow the steps mentioned here</p>
+					<p><a href="https://tomcat.apache.org/tomcat-7.0-doc/setup.html">https://tomcat.apache.org/tomcat-7.0-doc/setup.html</a></p>
+					<p>&nbsp;</p>
+					<h4 class="title">Quick Installation</h4>
+					<p>Once you have Java and Tomcat installed, you can copy the Caxpy.war file and put that inside webapps folder of tomcat. Caxpy&nbsp;embeds HSQLDB&nbsp;and doesn’t need any external database system.</p>
+					<div class="itemizedlist">
+					<ul type="disc">
+					<li>First, download the latest release from <a href="https://sourceforge.net/projects/caxpy/files/latest/download">the Caxpy&nbsp;downloads area</a></li>
+					<li>Copy the downloaded war file into Tomcat’s webapp directory</li>
+					<li>Restart tomcat if required, you should be able to see caxpy folder created inside “webapps” on successful deployment.</li>
+					<li>Point your web-browser to <a href="http://localhost:8080/caxpy">http://localhost:8080/caxpy</a>&nbsp;(Your tomcat may be running in different port, use the one your tomcat is configured )</li>
+					<li><strong>Login into the application using username : max and password : password</strong><br></li>
+					<li>Start using&nbsp;Caxpy</li>
+					</ul>
+					</div>
+					<p>Remote users should be able to access Caxpy&nbsp;over the network by using the machine name instead of “localhost” in the URL shown above. If there is a problem, it could be due to a firewall running on the machine where Caxpy&nbsp;is installed – and you may have to reconfigure things so that for example “java.exe” is not blocked.</p>
+					<h2>Notes for Linux / Unix users</h2>
+					<div class="sect2" lang="en">
+					<p>Everything&nbsp;will work unchanged as long as Java has been installed correctly i.e. “java” is in the PATH and it is the expected 1.7 or greater version. You may need to do things like apply executable permissions to the webapps folder on Linux, e.g. “chmod +x *.sh”. And also – unless you have “root” permissions, you may face problems starting services on port 8080 etc.</p>
+					</div>
+					<p>
+					<strong>Login into the application using username : max and password : password</strong><br>
+					<a href="http://caxpy.com/documentation">Learn more about Caxpy.</a>
+					</p>
+				</div>
+			</div>
+		</section>
+		
+		<footer id="meta">
+			<nav id="meta-links">
+				<a href="http://caxpy.com/blog">Documentation</a>
+				&middot;
+				<a href="http://caxpy.com/forum">Forum</a>
+				&middot;
+				<a href="mailto:muthukrishnan.t@hotmail.com">Contact</a>
+				&middot;
+				<a href="http://twitter.com/krimuthu" target="_blank">Twitter</a>
+			</nav>
+			<p id="me">2014 &copy; Caxpy Intelligent Systems - All Rights Reserved</p>
+		</footer>
+
+	</div>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-58724152-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>
+</body>
+</html>

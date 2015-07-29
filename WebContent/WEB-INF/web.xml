@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>caxpy</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>resteasy.servlet.mapping.prefix</param-name>
+    <param-value>/data</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.servlet.context.tempdir</param-name>
+    <param-value>/warehouse</param-value>
+  </context-param>
+  <context-param>
+    <param-name>resteasy.resources</param-name>
+    <param-value>com.caxpy.bi.rest.DataService</param-value>
+  </context-param>
+  <listener>
+    <listener-class>
+			org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
+		</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>resteasy-servlet</servlet-name>
+    <servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+		</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>resteasy-servlet</servlet-name>
+    <url-pattern>/data/*</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>Router</filter-name>
+    <filter-class>com.caxpy.bi.servlets.Router</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Router</filter-name>
+    <url-pattern>/*</url-pattern>
+    <servlet-name>Router</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+</web-app>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caxpy-users>
+  <user username="max" password="password" roles="admin"/>
+  <user username="jill" password="password" roles="admin"/>
+</caxpy-users>

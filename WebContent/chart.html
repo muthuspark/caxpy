@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
+<link rel="stylesheet" href="css/c3.min.css">
+<link rel="stylesheet" href="css/apprise-v2.css">
+<link rel="stylesheet" href="css/bootstrap-select.min.css">
+<script src="js/d3.v3.min.js"></script>
+<style type="text/css">
+.caxpy-report{
+min-height: 700px;
+}
+</style>
+</head>
+<button onclick="openReport()">Click to Open a Report</button>
+<div id="containorid"></div>
+<!-- <div class='caxpy-report' id="r1431447690782" data-params='[]' ></div> -->
+<script type="text/javascript" src="js/external/bootstrap-select.min.js"></script>
+<script src="js/external/c3.js"></script>
+<script type="text/javascript" src="js/caxpy-c3.js"></script>
+<script type="text/javascript" src="embed.js"></script>
+<script src="js/apprise-1.5.min.js"></script>
+<script type="text/javascript">
+function createEmbeddedReport(){
+	jQuery('.caxpy-report').each(function(){
+		var report_container = this;
+		var reportid = jQuery(this).attr('id');
+		var params = jQuery(this).attr('data-params');
+		var jsonp_url = window.location.origin+"/caxpy/report";
+		$.ajax({
+			  url: jsonp_url,
+			  type: "GET",
+			  data: {"reportid" : reportid.substring(1, reportid.length) , "params" : params}
+		}).done(function(data) {
+			var type = data.charttype;
+			if(type == 'line_chart'){
+				createLineChart(report_container.id, data);
+			}else if(type == 'column_chart'){
+				createColumnChart(report_container.id, data);
+			}else if(type == 'area_chart'){
+				createAreaChart(report_container.id, data);
+			}else if(type == 'pie_chart'){
+				createPieChart(report_container.id, data);
+			}else if(type == 'doughnut_chart'){
+				createDoughnutChart(report_container.id, data);
+			}else if(type == 'radar_chart'){
+				createRadarChart(report_container.id, data);
+			}else if(type == 'bubble_chart'){
+				createBubbleChart(report_container.id, data);
+			}else if(type == 'scatter_chart'){
+				createScatterChart(report_container.id, data);
+			}else if(type == 'chord_chart'){
+				createChordChart(report_container.id, data);
+			}else if(type == 'table'){
+				var tabledata = data.chartData;
+				var table_html = "<table class='table table-striped'><thead><tr>";
+				$.each(data.chart_cols, function (index, value) {
+					table_html+="<th>"+value+"</th>";
+				});
+				$.each(data.chart_rows, function (index, value) {
+					table_html+="<th>"+value+"</th>";
+				});
+				table_html+="</tr></thead><tbody>";
+				$.each(tabledata, function (index, value) {  
+					table_html+="<tr>";
+					data.chart_cols.forEach(function(val){
+						table_html+="<td>"+tabledata[index][val]+"</td>";
+					});
+					data.chart_rows.forEach(function(val){
+						table_html+="<td>"+tabledata[index][val]+"</td>";
+					});
+					table_html+="</tr>";
+				});
+				table_html+="</tbody></table>";
+				$("#"+report_container.id).html(table_html);
+			}
+		});
+	});
+}
+
+function openReport(){
+	var reportid = "r1431447690782";
+	$("#containorid").html("<div class='caxpy-report' id=\""+reportid+"\" data-params='[]' ></div>");
+	createEmbeddedReport();
+	apprise($("#containorid").html());
+}
+</script>
+</body>
+</html>

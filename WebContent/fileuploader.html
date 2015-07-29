@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Upload Experiment</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="http://blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>
+<script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+</head>
+<body>
+<input type="file" id="fileupload" name="files[]" data-url="documentwarehouse" multiple>
+<button type="button" id="uploadButton">Upload</button>
+<div id="progress">
+    <div class="bar" style="width: 0%;background: green; height: 18px;color:#fff; font-size: 10px; paddin:5px;"></div>
+</div>
+<p></p>
+<script type="text/javascript">
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	console.log(data);
+            $.each(data.files, function (index, file) {
+                $('<p/>').text(file.fileurl).appendTo(document.body);
+            });
+        },
+        autoUpload: false,
+        add : function(e,data){
+            $("#uploadButton").on("click",function(){
+               data.submit();
+            })
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+            $('#progress .bar').html(progress + '%');
+        }
+    });
+});
+</script>
+</body>
+</html>

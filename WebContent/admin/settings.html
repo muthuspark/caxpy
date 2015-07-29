@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Backup and Restore - Caxpy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link href='//fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/apprise-v2.css">
+<link rel="stylesheet" href="css/main.css">
+<style type="text/css">
+body{
+font-family: 'Open Sans', serif;
+}
+</style>
+<script	src="js/angular.min.js"></script>
+<script src="js/apprise-1.5.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<body ng-app="GroupsApp">
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <div class="navbar-brand" style="margin-left:-27px">
+	      	<A href="/caxpy" style="color:#fff"><img src="images/path4642.png" class="brand" > Caxpy</A>
+	      </div>
+	    </div>
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container" ng-controller="GroupsController">
+		<div class="row">
+			<div class="col-md-3">
+				<ul class="list-group">
+					<li class="list-group-item"><a href="groups">Report Groups</a></li>
+					<!-- <li class="list-group-item"><a href="settings">Settings</a></li> -->
+					<li class="list-group-item"><a href="backup">Backup And Restore</a></li>
+				</ul>
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Settings</h3>
+						<div class="list-group">
+							<div class="panel panel-default">
+							 <div  class="panel-heading">
+							 	Add New Group
+							 </div>
+							 <div class="panel-body">
+								<div class="form-group">
+									<label>Group Name</label>
+									<input type="text" value="" class="form-control" ng-model="name">
+								</div>
+								<div class="form-group">
+									<label>Group Description</label>
+									<input type="text" value="" class="form-control" ng-model="desc">
+								</div>
+								<div class="form-group">
+									<input type="button" value="Submit" ng-click="insertGroup()" class="btn btn-default">
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="list-group">
+						  <div class="list-group-item" ng-repeat="group in groups track by $index">
+						    <h4 class="list-group-item-heading">{{group.name}}</h4>
+						    <p class="list-group-item-text">{{group.desc}}</p>
+						    <br>
+						    <a ng-click="editGroup(group.id)">Edit</a> | <a ng-click="deleteGroup(group.id)">Delete</a>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+</body>
+</html>

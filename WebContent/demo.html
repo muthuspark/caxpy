@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Caxpy - Simplified Data Visualization</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/c3.min.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/bootstrap-select.min.css">
+<style type="text/css">
+.chart-type-cont{display: none;}
+</style>
+</head>
+<body>
+	<div class="area"></div>
+	<div id="tooltip"></div>
+	<nav class="main-menu">
+		<ul>
+			<li>
+				<a href="#" title="New Report" onclick="newReport();return false;"><i class="fa  fa-file-text fa-2x"></i>
+					<span class="nav-text">New Report </span> 
+				</a>
+			</li>
+			<li>
+         	  <a href="#" title="New Real Time Report" onclick="newRealTimeReport();return false;"><i class="fa  fa-clock-o fa-2x"></i>
+         	   		<span class="nav-text">New Real Time Report</span>
+         	  </a>
+         	</li>
+			<li><a title="Save Report" href="#" data-toggle="modal" onclick="saveReport();return false"><i class="fa  fa-save fa-2x"></i> <span
+					class="nav-text"> Save </span> </a></li>
+			<li><a title="Save Report As" href="#" data-toggle="modal" onclick="saveReportAs();return false"><i class="fa  fa-save fa-2x"
+					aria-hidden="true"></i> <span class="nav-text"> Save As </span> </a></li>
+			<li><a title="Add database" href="#" data-toggle="modal" onclick="databases();return false"><i class="fa  fa-database fa-2x"
+					aria-hidden="true"></i> <span class="nav-text"> Databases </span> </a></li>
+			<li>
+         	  <a  title="Delete Report" href="#" onclick="deleteReport()" ><i class="fa  fa-times fa-2x"></i>
+         	   		<span class="nav-text">
+                     Delete
+                 	</span>
+         	  </a>
+         	</li>
+         	<li>
+            	<a href="#" title="Query Parameters" onclick="queryParameters()">
+                 	<i class="fa fa-sliders fa-2x"></i>
+                 	<span class="nav-text">
+                     Query Parameters
+                 	</span>
+             	</a>
+         	</li>
+		 <li class="has-subnav">
+             <a href="#" title="Chart Properties"  onclick="openChartProperties()">
+                 <i class="fa fa-paint-brush fa-2x"></i>
+                 <span class="nav-text">
+                     Chart Properties
+                 </span>
+             </a>
+         </li>
+		 <!-- <li>
+            <a title="Settings" href="#" data-toggle="modal" onclick="openSettings()"><i class="fa  fa-cog fa-2x"
+					aria-hidden="true"></i> <span class="nav-text"> Settings </span> </a>
+         </li> -->
+		<li><a href="http://caxpy.com/blog/category/caxpydocumentation/" title="Help Documentation"> <i class="fa fa-info fa-2x"></i> <span class="nav-text">
+						Documentation </span>
+			</a></li>
+		</ul>
+
+		<!-- <ul class="logout">
+			<li>
+			<a href="#"> <i class="fa fa-power-off fa-2x"></i> <span class="nav-text"> Logout </span></a>
+			</li>
+		</ul> -->
+	</nav>
+	<nav class="left-main-menu">
+		<ul>
+			<li><a title="Table" onclick="show('table');return false" href="#"><img src="images/charts/table.png"></a></li>
+			<li><a title="Area Chart" onclick="show('area_chart');return false"><img src="images/charts/area.png"></a></li>
+			<li><a title="Line Chart" onclick="show('line_chart');return false" href="#"><img src="images/charts/line.png"></a></li>
+			<li><a title="Column Chart" onclick="show('column_chart');return false"><img src="images/charts/column.png"></a></li>
+			<li><a title="Stacked Column Chart" onclick="show('stacked_chart');return false"><img src="images/charts/stackbar.png"></a></li>
+			<li><a title="Bar Chart" onclick="show('bar_chart');return false"><img src="images/charts/bar.png"></a></li>
+			<li><a title="Pie Chart" onclick="show('pie_chart');return false"><img src="images/charts/pie.png"></a></li>
+			<li><a title="Doughnut Chart" onclick="show('doughnut_chart');return false"><img src="images/charts/doughnut.png"></a></li>
+			<!-- <li><a title="Radar Chart" onclick="show('radar_chart');return false"><img src="images/charts/radar.png"></a></li> -->
+			<li><a title="Bubble Chart" onclick="show('bubble_chart');return false"><img src="images/charts/bubble.png"></a></li>
+			<li><a title="Scatter Plot" onclick="show('scatter_chart');return false"><img src="images/charts/scatter.png"></a></li>
+			<!-- <li><a title="Chord Chart" onclick="show('chord_chart');return false"><img src="images/charts/chords.png"></a></li> -->
+			<li><a title="Embed Report" onclick="share();return false" href="#" data-toggle="modal"><img src="images/charts/share.png"></a></li>
+			<!-- <li><a title="Export As PNG" onclick="exportAsPNG();return false" href="#" ><img src="images/charts/export_black.png"></a></li> -->
+		</ul>
+	</nav>
+	<nav class="navbar navbar-default" style="margin-left: 35px">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Caxpy</a>
+	    </div>
+	
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="demo/working.swf" target="_blank" title="Watch Demo">Watch Demo</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Databases<span class="caret"></span></a>
+	          <ul class="dropdown-menu" id="databases" role="menu">
+	            
+	          </ul>
+	        </li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container-fluid" id="caxpy-main-container" style="min-height: 500px;">
+		<div class="row">
+			<div class="col-md-2 caxpy-col">
+				<ul class="list-group">
+					<li class="list-group-item"><strong>REPORTS</strong></li>
+					<li class="list-group-item reports-container">
+						<ul class="report-menu" id="saved-reports">
+						</ul>
+					</li>
+					<li class="list-group-item queryheader"><strong>QUERY EXECUTER</strong></li>
+					<li class="list-group-item querybox"><textarea rows="5" cols="" class="form-control" id="query"></textarea> <br>
+						<button class="btn btn-primary" onclick="executeQuery();">Execute</button></li>
+					<li class="list-group-item column-container" id="column-container">
+						<div class="form-group ">
+							<label for="columns">Columns</label>
+							<ul id="columns" class="scrolly column-collectors" name="columns">
+
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-10 caxpy-col " id="caxpy-col-middle">
+				<ul class="list-group">
+					<li class="list-group-item nopadding center-column  ">
+						<ul class="dropper_col column-collectors">
+
+						</ul>
+					</li>
+					<li class="list-group-item nopadding center-column ">
+						<ul class="dropper_row column-collectors">
+
+						</ul>
+					</li>
+					<li class="list-group-item center-column chart-cont">
+					<div class="scrollable ">
+						<div class="caxpy-alerts">
+						    <div class="caxpy-alert alert alert-danger alert-error" id="alert-type">
+						        <a href="#" class="close" data-dismiss="alert">&times;</a>
+						        <div  id="alert-message">
+						        	<strong>Error!</strong> A problem has been occurred while submitting your data.
+						        </div>
+						    </div>
+						</div>
+	 					<div id="table" class="reports" style="display: block;">
+		 					<table class="table table-striped display">
+					    	  <thead>
+						       
+						      </thead>
+						      <tbody>
+						        
+						      </tbody>
+						    </table>
+	 					</div>
+	 					<!-- Basic Reports -->
+	 					<div id="empty_chart" class="reports"></div>
+	 					<div id="line_chart" class="reports"></div>
+	 					<div id="column_chart" class="reports"></div>
+	 					<div id="bar_chart" class="reports"></div>
+	 					<div id="area_chart" class="reports"></div>
+	 					<div id="pie_chart" class="reports"></div>
+	 					<div id="doughnut_chart" class="reports"></div>
+	 					<div id="radar_chart" class="reports"></div>
+	 					<div id="bubble_chart" class="reports"></div>
+	 					<div id="scatter_chart" class="reports"></div>
+	 					<div id="stacked_chart" class="reports"></div>
+	 					<!-- End Basic Reports -->
+	 					
+	 					<!-- Advanced Reports -->
+	 					<div id="chord_chart" class="reports"></div>
+	 					<div id="sunburst_chart" class="reports">
+					      <div id="sequence"></div>
+					      <div id="sunburst_chart_containor">
+					        <div id="explanation" style="visibility: hidden;">
+					          <span id="percentage"></span>
+					        </div>
+					      </div>
+	 					</div>
+	 					<div id="treelayout_chart" class="reports"></div>
+	 					<!-- End Advanced Reports -->
+	 				</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="modal fade" id="saveReport" tabindex="-1" role="dialog" aria-labelledby="saveReport" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Save Report</h4>
+					</div>
+					<div class="modal-body">
+						<input type="text" id="report_name" class="form-control" placeholder="Report Name">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="saveAs();">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="shareReport" tabindex="-1" role="dialog" aria-labelledby="shareReport" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Embed Report</h4>
+					</div>
+					<div class="modal-body">
+						<ul id="shareTab" class="nav nav-tabs">
+						   <li class="active">
+						      	<a href="#html" data-toggle="tab">HTML</a>
+						   </li>
+						 <!--   <li>
+						   		<a href="#svg" data-toggle="tab">SVG</a>
+						   	</li> -->
+						</ul>
+						<div id="settingsTabContent" class="tab-content">
+						   	<div class="tab-pane fade in active" id="html">
+								<div class="input-group input-group-lg">
+									<label>Copy paste the below code in your HTML where you wish to see the Report</label>
+									<textarea class="form-control" id="embed-code" style="min-height: 250px;" cols="20"></textarea>
+								</div>
+							</div>
+							<!-- <div class="tab-pane fade in active" id="svg">
+								<div class="input-group input-group-lg">
+									<label>Copy paste the below code in your HTML where you wish to see the Report</label>
+									<textarea class="form-control" id="embed-code-svg" style="min-height: 450px;" cols="20"></textarea>
+								</div>
+							</div> -->
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="connectionsDialog" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="connectionsDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Choose Database Connection</h4>
+					</div>
+					<div class="modal-body whitebg">
+						<label>Database Types</label>
+						<div class="form-group">
+							<select class="form-control" id="dbtypes" >
+								<option value="sql">SQL Database</option>
+								<option value="csv">CSV/Excel</option>
+								<option value="url">URL/Link (JSON Response)</option>
+							</select>
+						</div>
+						<div id="sql-cont" class="dbtypes-cont">
+							<label>Available SQL Connections</label>
+							<div class="form-group">
+								<select class="form-control" id="connections" ></select>
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-info" id="newConnection" onclick="createNewConnection()" value="New Connection">
+								<input type="button" class="btn btn-info" id="editConnection" onclick="editSelectedConnection()" disabled="disabled" value="Edit Connection">
+								<input type="button" class="btn btn-warning" id="deleteConnection" onclick="deleteSelectedConnection()" disabled="disabled" value="Delete Connection">
+							</div> 
+						</div>
+						<div id="csv-cont" class="dbtypes-cont">
+							<label>Available CSV/Excel Data</label>
+							<div class="form-group">
+								<select id="csvdata" class="form-control"></select>
+								<button type="button" onclick="deleteUploadedFile()">X</button>
+							</div>
+							<label>Add New CSV/Excel Data file</label>
+							<div class="form-group">
+								<input type="file" id="fileupload" name="file" data-url="documentwarehouse" >
+								<button type="button" id="uploadButton">Upload</button>
+								<div id="progress">
+								    <div class="bar" style="width: 0%;background: green; height: 18px;color:#fff; font-size: 10px; paddin:5px;"></div>
+								</div>
+							</div> 
+						</div>
+						<div id="url-cont" class="dbtypes-cont">
+							<label>Set URL</label>
+							<div class="form-group">
+								<input type="text" class="form-control" id="dataURL" value="" placeholder="http://sample.com/oper?p=10">
+							</div> 
+							<label>Data Key (optional)</label>
+							<div class="form-group">
+								<input type="text" class="form-control" id="dataKey" value="" >
+							</div> 
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" onclick="selectConnection()">Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="queryParamsDialog" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="queryParamsDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Add Query Parameters</h4>
+					</div>
+					<div class="modal-body whitebg">
+						<input type="hidden" value="1" id="paramcount" >
+						<table class="table" id="params">
+							<tr>
+							  <td class="form-group">
+							    Parameter
+							  </td>
+							  <td>
+							    <input type="text" class="form-control" id="param1" placeholder="Name">
+							  </td>
+							  <td class="form-group">
+							    Value
+							  </td>
+							  <td>
+							    <input type="text" class="form-control" id="value1" placeholder="Value">
+							  </td>
+							  <td class="form-group">
+							  	<span>&times;</span>
+							  </td>
+							</tr>
+						</table>
+						<div class="form-group">
+							<input type="button" class="btn btn-warning" id="addNewParameter" onclick="addNewParameter()" value="+">
+						</div> 
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" onclick="saveParameters()">Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="newConnectionsDialog" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="newConnectionsDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">New Database Connection</h4>
+					</div>
+					<div class="modal-body whitebg">
+						<form id="connectionDataForm" name="connectionDataForm">
+							<div class="form-group">
+								<label>Database Type</label>
+								<select id="database" name="database">
+									<option value="mysql">MySQL</option>
+									<option value="postgresql">PostgreSQL</option>
+									<option value="oracle">Oracle</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Host Name</label> <input type="text" name="host" class="form-control" id="host" placeholder="Enter Host name">
+							</div>
+							<div class="form-group">
+								<label>DB Name</label> <input type="text" name="dbname" class="form-control" id="db" placeholder="Enter Database Name">
+							</div>
+							<div class="form-group">
+								<label>Port</label> <input type="number" name="port" class="form-control" id="port" placeholder="Enter Port">
+							</div>
+							<div class="form-group">
+								<label>User Name</label> <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username">
+							</div>
+							<div class="form-group">
+								<label>Password</label> <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-info" id="save" onclick="testDatabaseConnection()" value="Test">
+								<img src="images/720.GIF" id="test_spinner" class="loading_spinner" />
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<img src="images/720.GIF" id="save_spinner" class="loading_spinner" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success" id="saveConnections" onclick="saveDatabaseConnection()">Save</button>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- <div class="modal fade" id="settingsDialog" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="settingsDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Settings</h4>
+					</div>
+					<div class="modal-body whitebg">
+						<ul id="settingsTab" class="nav nav-tabs">
+						   <li class="active">
+						      	<a href="#mailserver" data-toggle="tab">Mail Server</a>
+						   </li>
+						   <li>
+						   		<a href="#users" data-toggle="tab">Users</a>
+						   	</li>
+						</ul>
+						<div id="settingsTabContent" class="tab-content">
+						   <div class="tab-pane fade in active" id="mailserver">
+							   	<div class="form-group">
+							    	<label for="hostname">Host Name (SMTP)</label>
+							    	<input type="text" class="form-control" id="hostname" placeholder="smtp.example.com">
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="hostport">Port</label>
+							    	<input type="number" class="form-control" id="hostport" placeholder="25" value="25">
+							  	</div>
+							  	<div class="form-group">
+								    <label for="fromemail">User Name</label>
+								    <input type="text" class="form-control" id="mailusername" >
+							  	</div>
+							  	<div class="form-group">
+								    <label for="frompassword">Password</label>
+								    <input type="text" class="form-control" id="mailpassword" >
+							  	</div>
+							  	<div class="form-group">
+								    <label for="servertype">Server Type</label>
+								    <select class="form-control" id="servertype" >
+								    	<option value="smtp">SMTP</option>
+								    	<option value="smtps">SMTPS</option>
+								    </select>
+							  	</div>
+							  	<div class="form-group">
+								    <label for="fromemail">Email "From" Address</label>
+								    <input type="text" class="form-control" id="fromemail" >
+							  	</div>
+							  	<div class="form-group">
+								    <label for="frompassword">Email "From" Address</label>
+								    <input type="text" class="form-control" id="fromname" >
+							  	</div>
+							  	<div class="form-group">
+							  		<label>
+							  			<input type="checkbox" id="usestarttls" > Use Start TLS
+							  		</label>
+							  		<label>
+							  			<input type="checkbox" id="usessl" > Use SSL
+							  		</label>
+							  	</div>
+							  	<div class="form-group">
+								    <input type="button" class="btn btn-success" onclick="testSendMail()" value="Send Test Mail">
+							  	</div>
+						   </div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success" id="saveConnections" onclick="saveSettings()">Save</button>
+					</div>
+				</div>
+			</div>
+			
+		</div> -->
+		<div class="modal fade" id="chartSettingsDialog" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="chartSettingsDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Chart Properties</h4>
+					</div>
+					<div class="modal-body whitebg">
+						<ul id="settingsTab" class="nav nav-tabs">
+						   <li class="active">
+						      	<a href="#basicproperties" data-toggle="tab">Basic</a>
+						   </li>
+						   <li>
+						   		<a href="#advancedproperties" data-toggle="tab">Advanced</a>
+						   	</li>
+						</ul>
+						<div id="settingsTabContent" class="tab-content">
+						   <div class="tab-pane fade in active" id="basicproperties">
+							   	<div class="form-group">
+							    	<label for="chartTitle">Chart Title</label>
+							    	<input type="text" class="form-control" id="chartTitle" >
+							  	</div>
+							  		<div class="form-group">
+							    	<label for="chartTitle">Chart Sub Title</label>
+							    	<input type="text" class="form-control" id="chartSubTitle" >
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="xtitle">X Axis Title</label>
+							    	<input type="text" class="form-control" id="xtitle" value="">
+							  	</div>
+							  	<div class="form-group">
+								    <label for="ytitle">Y Axis Title</label>
+								    <input type="text" class="form-control" id="ytitle" >
+							  	</div>
+						   </div>
+						   <div class="tab-pane fade in active" id="advancedproperties">
+							   	<div class="form-group">
+							  		<label>
+							  			<input type="checkbox" id="cache" > Cache Data
+							  		</label>
+							  		<label>
+							  			<input type="checkbox" id="showall" checked="checked"> Limit records to 1000 (Uncheck this if you want to show all records)
+							  		</label>
+							  	</div>
+						   </div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success" id="saveChartProperties" onclick="saveChartProperties()">Save</button>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="contactme">
+		<a href="mailto:muthukrishnan.t@hotmail.com">Need help?</a>
+	</div>
+	<form style="display:none;" name="topng" method="post" action="/caxpyexporter/ToPNG" target="_blank">
+		<input type="hidden" value="" name="svg" id="svgforexport">
+	</form>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/apprise-1.5.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/external/bootstrap-select.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/d3.v3.min.js"></script>
+	<script src="js/d3.tip.v0.6.3.js"></script>
+	<script src="js/external/c3.js"></script>
+	<script type="text/javascript" src="js/caxpy-c3.js"></script>
+	<script type="text/javascript" src="js/caxpy-advanced-analytics.js"></script>
+	<script type="text/javascript" src="js/Report.js"></script> 
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/modules/databases.js"></script>
+	<script src="js/fileupload/jquery.ui.widget.js"></script>
+	<script src="js/fileupload/jquery.iframe-transport.js"></script>
+	<script src="js/fileupload/jquery.fileupload.js"></script>
+	<script type="text/javascript">
+	$(function () {
+	    $('#fileupload').fileupload({
+	        dataType: 'json',
+	        done: function (e, data) {
+	        	var result = data.result;
+	        	report.chartData = JSON.parse(result.datajson);
+	        	report.connection = "file-"+result.id;
+	        	$("#csvdata").append("<option value='" + result.id + "'>" + result.filename + "</option>");
+	        	$('#csvdata option[value="' + result.id + '"]').prop('selected', true);
+	        	sessionStorage.setItem("file-"+result.id, JSON.stringify(report.chartData));
+	        },
+	        autoUpload: false,
+	        add : function(e,data){
+	            $("#uploadButton").on("click",function(){
+	               data.submit();
+	            })
+	        },
+	        progressall: function (e, data) {
+	            var progress = parseInt(data.loaded / data.total * 100, 10);
+	            $('#progress .bar').css(
+	                'width',
+	                progress + '%'
+	            );
+	            $('#progress .bar').html(progress + '%');
+	        },
+	        fail : function (e, data) {
+	            // data.errorThrown
+	            // data.textStatus;
+	            // data.jqXHR;
+	            clearProgressBar();
+	            apprise("Failed to upload your file. Please recheck if the file type is right.");
+	        }
+	    });
+	});
+	</script>
+</body>
+</html>

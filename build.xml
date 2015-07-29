@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="caxpy" default="war">
+   <property environment='env' />
+   <property name="src" value="src" />
+   <property name="reports.tests.dir" value="test-reports" />
+   <property name="src.test" value="test" />
+   <property name="lib" value="WebContent/WEB-INF/lib" />
+   <property name="classes" value="build/classes" />
+   <property name="report.dir" location="${basedir}/report" />
+   <property name="lib.dir" location="${basedir}/WebContent/WEB-INF/lib" />
+   <property name="src.dir" location="${basedir}/src" />
+   <property name="htm.dir" location="${basedir}/html" />
+   <property name="findbugs.home.dir" value="tools/findbugs" />
+   <property name="checkstyle.home.dir" location="tools/checkstyle" />
+   <property name="checkstyle.home.dir" location="tools/checkstyle" />
+   <property name="classes.dir" value="build/classes" />
+   <property name="report.checkstyle.dir" location="${report.dir}/checkstyle" />
+   <property name="report.findbugs.dir" location="${report.dir}/findbugs" />
+   <property name="tomcat.dir" location="${env.CATALINA_HOME}" />
+   <property name="report.temp.dir" location="${report.dir}/temp" />
+   <path id="compile.classpath">
+      <fileset dir="WebContent/WEB-INF/lib">
+         <include name="*.jar" />
+      </fileset>
+	  <fileset dir="${tomcat.dir}/lib">
+         <include name="*.jar" />
+      </fileset>
+   </path>
+   <path id="test.classpath">
+      <pathelement location="${classes}" />
+      <pathelement location="test-lib/hamcrest-core-1.3.jar" />
+      <fileset dir="${lib}">
+         <include name="**/*.jar" />
+      </fileset>
+   </path>
+   <target name="init">
+      <mkdir dir="build/classes" />
+      <mkdir dir="dist" />
+      <mkdir dir="${report.findbugs.dir}" />
+	  <mkdir dir="${report.findbugs.dir}" />
+      <mkdir dir="${reports.tests.dir}" />
+   </target>
+   <target name="compile" depends="init">
+      <javac destdir="build/classes" debug="true" srcdir="src">
+         <classpath refid="compile.classpath" />
+      </javac>
+      <javac destdir="build/classes" debug="true" srcdir="test">
+         <classpath refid="compile.classpath" />
+      </javac>
+   	  <copy todir="build/classes">
+   	   	<fileset dir="src" includes="**/*.properties"/>
+   	  </copy>
+   </target>
+   <target name="war" depends="compile, findbugs, report.findbugs">
+      <copy todir="build/classes">
+      	  <fileset dir="resources" includes="**/*.properties"/>
+      </copy>
+      <war destfile="dist/ROOT.war" webxml="WebContent/WEB-INF/web.xml">
+         <fileset dir="WebContent" />
+         <lib dir="WebContent/WEB-INF/lib" />
+         <classes dir="build/classes" />
+      </war>
+   	 
+   </target>
+   <target name="clean">
+      <delete dir="dist" />
+      <delete dir="build" />
+   </target>
+   <taskdef resource="checkstyletask.properties" classpath="${checkstyle.home.dir}/checkstyle-5.6-all.jar" />
+   <target name="checkstyle">
+      <mkdir dir="${report.checkstyle.dir}" />
+      <checkstyle config="${checkstyle.home.dir}/hcm_checks.xml" failureProperty="checkstyle.failure" failOnViolation="false">
+         <fileset dir="src" includes="**/*.java" />
+         <formatter type="plain" />
+         <formatter type="xml" toFile="${report.checkstyle.dir}/checkstyle_report.xml" />
+      </checkstyle>
+   </target>
+   <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home.dir}/lib/findbugs-ant.jar" />
+   <target name="findbugs" depends="compile" description="Run code analysis over code to check for problems.">
+      <!-- Fail this target if FindBugs is not installed. -->
+      <available file="${findbugs.home.dir}/lib/findbugs.jar" property="findbugs.available" />
+      <fail unless="findbugs.available" message="Error: FINDBUGS_HOME not set or findbugs.jar not found." />
+      <!-- Run FindBugs. -->
+      <mkdir dir="${report.findbugs.dir}" />
+      <findbugs home="${findbugs.home.dir}" workHard="true" output="xml:withMessages" outputFile="${report.findbugs.dir}/findbugs.xml">
+         <class location="${classes.dir}" />
+         <auxClasspath>
+            <fileset file="${lib.dir}/junit-4.11.jar" />
+         </auxClasspath>
+      </findbugs>
+   </target>
+   <!-- -->
+   <target name="report.findbugs" description="Generate a report on error analysis.">
+      <xslt in="${report.findbugs.dir}/findbugs.xml" style="${findbugs.home.dir}/src/xsl/fancy.xsl" out="${report.findbugs.dir}/findbugs-default.html" />
+   </target>
+   <target name="report.checkstyle" description="Generate a report of code convention violations.">
+      <mkdir dir="${report.checkstyle.dir}" />
+      <style in="${report.checkstyle.dir}/checkstyle_report.xml" out="${report.checkstyle.dir}/checkstyle_report.html" style="${checkstyle.home.dir}/contrib/checkstyle-noframes.xsl" />
+   </target>
+   
+   
+   <!-- Junit -->
+   <target name="test" depends="compile">
+	  <mkdir dir="${reports.tests.dir}" />
+      <junit printsummary="no" fork="yes" haltonfailure="yes">
+         <formatter type="plain" usefile="false" />
+         <formatter type="xml" />
+         <classpath refid="test.classpath" />
+         <batchtest fork="yes" todir="${reports.tests.dir}">
+            <fileset dir="${src.test}">
+               <include name="**/*Test*.java" />
+            </fileset>
+         </batchtest>
+      </junit>
+   </target>
+   
+   <target name="report" depends="test">
+        <mkdir dir="${reports.tests.dir}/html" />
+        <junitreport todir="${reports.tests.dir}">
+            <fileset dir="${reports.tests.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report todir="${reports.tests.dir}/html" />
+        </junitreport>
+    </target>
+	
+</project>
