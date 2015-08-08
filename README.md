@@ -2,6 +2,14 @@
 #### A Simple Data Visualization Software
 ![Image of Caxpy](http://caxpy.com/images/caxpy/bubble-report.png)
 
+##Features
+* D3 JS Based charts. Line, Column, Area, Pie chart, Doughnut, Bubble Chart and Scatter plot
+* Supports MySQL, PostgreSQL, Oracle
+* Create dynamic reports
+* Create dynamic query based reports
+* Easily embed created reports in your application with a few lines of code.
+* Lightweight and Easy to integrate
+
 ##Prerequisites
 Check if you have tomcat, Ant and Java installed in your system. 
 Required version:
