@@ -56,19 +56,16 @@ public class H2Db {
 		if (connectionPool == null) {
 			try {
 				//Class.forName("org.h2.Driver");
-				HikariConfig  config = new HikariConfig();
-				config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
-				config.addDataSourceProperty("URL", "jdbc:h2:~/" + DB);
-				 // jdbc url specific to
-														// your database, eg
-														// jdbc:mysql://127.0.0.1/yourdb
-				config.addDataSourceProperty("user", "sa");
-				config.addDataSourceProperty("password", "sa");
+				//HikariConfig  config = new HikariConfig();
+				HikariDataSource ds = new HikariDataSource();
+				ds.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
+				ds.addDataSourceProperty("URL", "jdbc:h2:~/" + DB);
+				ds.addDataSourceProperty("user", "sa");
+				ds.addDataSourceProperty("password", "sa");
 				// config.setMinConnectionsPerPartition(5);
 				// config.setMaxConnectionsPerPartition(10);
 				// config.setPartitionCount(1);
-				connectionPool = new HikariDataSource(config); // setup the connection
-														// pool
+				connectionPool = ds;
 			} catch (Exception e) {
 				log.error(e);
 			}
