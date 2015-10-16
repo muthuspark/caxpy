@@ -81,6 +81,8 @@ function createEmbeddedReport(){
 				createScatterChart(containerid, data);
 			}else if(type == 'chord_chart'){
 				createChordChart(containerid, data);
+			}else if(type == 'funnel_chart'){
+				createFunnelChart(containerid, data);
 			}else if(type == 'table'){
 				var tabledata = data.chartData;
 				var table_html = "<table class='table table-striped'><thead><tr>";

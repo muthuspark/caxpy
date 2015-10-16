@@ -88,12 +88,15 @@ function renderFunnelChart(containorid, reportjson){
 	reportjson.chartData.forEach(function(val){ 
 		data.push([ val[reportjson.chart_cols[0]] + '' , parseFloat( val[reportjson.chart_rows[0]]) ])
 	});
+	//sort the data
+	var data = data.sort(function(a,b){   return parseFloat(a[1]) - parseFloat(b[1]);  });
+	data.reverse();
     var options = {
     		chart: {
     			bottomPinch: 1
     		}
     };
-
+    
     var chart = new D3Funnel('#'+containorid);
     chart.draw(data, options);
 }
