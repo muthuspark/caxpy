@@ -82,6 +82,29 @@ function createStackedColumnChart(pcontainorid, reportjson) {
 	$("#" + containorid).height($("#" + pcontainorid).height() - 60);
 	renderStackeColumnChart(containorid, reportjson);
 }
+
+function renderFunnelChart(containorid, reportjson){
+	var data = [] ;
+	reportjson.chartData.forEach(function(val){ 
+		data.push([ val[reportjson.chart_cols[0]] + '' , parseFloat( val[reportjson.chart_rows[0]]) ])
+	});
+    var options = {
+    		chart: {
+    			bottomPinch: 1
+    		}
+    };
+
+    var chart = new D3Funnel('#'+containorid);
+    chart.draw(data, options);
+}
+
+function createFunnelChart(pcontainorid, reportjson) {
+	createRelevantContainers(pcontainorid, reportjson);
+	containorid = "chart-cont-" + pcontainorid;
+	$("#" + containorid).height($("#" + pcontainorid).height() - 60);
+	renderFunnelChart(containorid, reportjson);
+}
+
 function renderBarChart(containorid, reportjson) {
 		var w = $("#" + containorid).width(), h = $("#" + containorid).height();
 		var margin = {
@@ -867,7 +890,7 @@ function createRelevantContainers(containorid, reportjson) {
 					"<ul class=\"list-group\" style='list-style:none'> " 
 					+ "<li class=\"list-group-item nopadding center-column select-filters\" id=\"select-filters-" + containorid + "\"> </li>"
 					+ "<li class=\"list-group-item center-column noborder chart-cont-" + containorid + "\" id=\"chart-cont-" + containorid + "\"></li>"
-					+ "<li class=\"list-group-item center-column noborder chart-type-cont\" id=\"chart-type-cont-" + containorid + "\">" 
+					/*+ "<li class=\"list-group-item center-column noborder chart-type-cont\" id=\"chart-type-cont-" + containorid + "\">" 
 						+ "<select name=\"selectchart\" charttype='CHARTTYPE' id='change-chart-type-"+containorid+"' class=\" selectpicker input-xlarge\">"
 							+ "<option value='table' " + (charttype == 'table' ? 'selected=selected' : '') + " >Table</option>" 
 							+ "<option value='area_chart' " + (charttype == 'area_chart' ? 'selected=selected' : '') + ">Area</option>" 
@@ -878,7 +901,7 @@ function createRelevantContainers(containorid, reportjson) {
 							//+ "<option value='pie_chart' " + (charttype == 'pie_chart' ? 'selected=selected' : '') + ">Pie</option>" 
 							//+ "<option value='doughnut_chart' " + (charttype == 'doughnut_chart' ? 'selected=selected' : '') + ">Doughnut</option>" 
 						+ "</select>" 
-					+ "<li>" 
+					+ "<li>" */
 					+ addDebugInformation(containorid, reportjson)
 					+ "</ul>");
 	//fix the heights in case its zero for dynamic charts

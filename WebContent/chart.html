@@ -16,7 +16,21 @@ min-height: 700px;
 </head>
 <button onclick="openReport()">Click to Open a Report</button>
 <div id="containorid"></div>
-<!-- <div class='caxpy-report' id="r1431447690782" data-params='[]' ></div> -->
+<div class="container">
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1427110632655" data-params='[{"name":"q","value":"Q1"}]' ></div></div>
+	<div class="col-md-3"><div class='caxpy-report' reportid="r1444967018906" data-params='[]'></div>
+</div>
+<div id="funnel"></div>
 <script type="text/javascript" src="js/external/bootstrap-select.min.js"></script>
 <script src="js/external/c3.js"></script>
 <script type="text/javascript" src="js/caxpy-c3.js"></script>
@@ -86,6 +100,23 @@ function openReport(){
 	createEmbeddedReport();
 	apprise($("#containorid").html());
 }
+</script>
+
+<script type="text/javascript">
+var data = [
+    ['Plants',     5000],
+    ['Flowers',    2500],
+    ['Perennials', 200],
+    ['Roses',      50],
+];
+var options = {
+		chart: {
+			bottomPinch: 1
+		}
+};
+
+var chart = new D3Funnel('#funnel');
+chart.draw(data, options);
 </script>
 </body>
 </html>

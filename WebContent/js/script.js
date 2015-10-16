@@ -756,6 +756,8 @@ function show(type) {
 		createTreeLayoutChart(type, report);
 	} else if(type == 'stacked_chart'){
 		createStackedColumnChart(type, report);
+	} else if(type == 'funnel_chart'){
+		createFunnelChart(type, report);
 	}
 }
 
@@ -829,9 +831,8 @@ function initializeUIComponents() {
 
 function exportAsPNG() {
 	$("svg").attr("xmlns", "http://www.w3.org/2000/svg");
-	var svg = $("#" + report.charttype).html();
+	var svg = $("svg")[0].outerHTML;
 	$("#svgforexport").val(svg);
-	console.log(svg);
 	document.topng.submit();
 }
 
