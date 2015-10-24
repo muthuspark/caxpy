@@ -449,6 +449,13 @@ function renderPieChart(containorid, reportjson){
 			},
 			size : {
 				height : h
+			},
+			pie: {
+				label: {
+					 format:function(x){
+						   return x;
+				     }
+		        }
 			}
 		});
 		reportjson.chart.push(chart);
@@ -501,6 +508,13 @@ function renderDoughnutChart(containorid, reportjson){
 			},
 			size : {
 				height : h
+			},
+			donut: {
+				label: {
+					 format:function(x){
+						   return x;
+				     }
+		        }
 			}
 		});
 		reportjson.chart.push(chart);
