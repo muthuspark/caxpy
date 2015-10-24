@@ -127,10 +127,13 @@ public class H2Db {
 			con = connection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt
-					.executeQuery("select reportjson from reports where reportid="
+					.executeQuery("select reportjson, groupid from reports where reportid="
 							+ reportid);
 			while (rs.next()) {
 				reportjson = clobToString(rs.getClob(1));
+				JSONObject obj = new JSONObject(reportjson);
+				obj.put("group_name", rs.getInt(2));
+				reportjson = obj.toString();
 			}
 		} catch (Exception e) {
 			log.error(e);
@@ -146,7 +149,7 @@ public class H2Db {
 		}
 		return reportjson;
 	}
-
+	
 	/**
 	 * Get all the report from the report location.
 	 *

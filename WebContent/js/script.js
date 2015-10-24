@@ -36,6 +36,7 @@ function openReport(report_name) {
 		for (var i = 0; i < report.chart_rows.length; i++) {
 			$(".dropper_row").append("<div class='alert alert-info column_boxes sortable' role='alert'>" + report.chart_rows[i] + "</div>");
 		}
+		$("#egroup_name").val(report.group_name);
 		// populate the query parameters
 		populateParametersDialogue();
 //		if(data.query){
