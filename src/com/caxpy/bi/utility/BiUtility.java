@@ -118,9 +118,10 @@ public class BiUtility {
 	 * Save report.
 	 *
 	 * @param report the report
+	 * @param groupid 
 	 * @return the string
 	 */
-	public static String saveReport(String report) {
+	public static String saveReport(String report, int groupid) {
 		String report_name = null;
 		boolean newReport = false;
 		long report_id = System.currentTimeMillis();
@@ -146,6 +147,7 @@ public class BiUtility {
 		rep.setReportid(report_id);
 		rep.setReportjson(report);
 		rep.setReportname(report_name);
+		rep.setGroupid(groupid);
 		if(!newReport){
 			H2Db.saveReport(rep);
 		}else{

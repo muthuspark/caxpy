@@ -81,7 +81,7 @@ public class DataService {
 	@Produces("application/json")
 	public Response saveReport(@FormParam("report") String report,
 			@FormParam("groupid") int groupid) {
-		String report_name = BiUtility.saveReport(report);
+		String report_name = BiUtility.saveReport(report, groupid);
 		Map<String, String> resData = new HashMap<String, String>();
 		resData.put("status", "success");
 		resData.put("report", report_name);
