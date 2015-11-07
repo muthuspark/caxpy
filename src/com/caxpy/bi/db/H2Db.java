@@ -27,7 +27,6 @@ import com.caxpy.bi.model.Group;
 import com.caxpy.bi.model.ResponseStatus;
 import com.caxpy.bi.utility.CaxpyConstants;
 import com.caxpy.bi.utility.ReportUtility;
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 // TODO: Auto-generated Javadoc
